@@ -1,1 +1,14 @@
-<p>header works!</p>
+<mat-grid-list cols="8" rowHeight="10vh">
+    <mat-grid-tile colspan="2">Task Management</mat-grid-tile>
+    <mat-grid-tile colspan="4"></mat-grid-tile>
+    <mat-grid-tile>
+        <a routerLink="/login" routerLinkActive="active" mat-flat-button>
+            Login
+        </a>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <a routerLink="/register" routerLinkActive="active" mat-flat-button>
+            Register
+        </a>
+    </mat-grid-tile>
+</mat-grid-list>

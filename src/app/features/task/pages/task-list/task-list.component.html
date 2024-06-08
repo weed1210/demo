@@ -1,0 +1,7 @@
+<mat-grid-list cols="4" rowHeight="30vh">
+    @for (task of tasks; track task) {
+        <mat-grid-tile>
+            <app-task [task]="task"></app-task>
+        </mat-grid-tile>
+    }
+</mat-grid-list>

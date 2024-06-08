@@ -1,31 +1,39 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './share/layout/header/header.component';
-import { TasksComponent } from './features/task/pages/tasks/tasks.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { TaskComponent } from './features/task/components/task/task.component';
-import { MatCardModule } from '@angular/material/card'
-import { MatProgressBar } from '@angular/material/progress-bar',
+import { TaskModule } from './features/task/task.module';
+import { LayoutModule } from './share/layout/layout.module';
+import { StoreModule } from '@ngrx/store';
+import { memberReducer } from './core/auth/states/members.reducer';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { apiInterceptor } from './core/interceptors/api.interceptor';
+import { errorInterceptor } from './core/interceptors/error.interceptor';
+import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from './core/auth/auth.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    TasksComponent,
-    TaskComponent,
   ],
   imports: [
     BrowserModule,
+    AuthModule,
+    TaskModule,
+    LayoutModule,
     AppRoutingModule,
-    MatCardModule,
-    MatProgressBar
+    StoreModule.forRoot({
+      member: memberReducer
+    })
   ],
   providers: [
     provideClientHydration(),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([apiInterceptor, errorInterceptor])
+    )
   ],
   bootstrap: [AppComponent]
 })

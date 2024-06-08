@@ -1,0 +1,9 @@
+.task-description {
+    word-break: normal;
+    white-space: normal;
+}
+
+mat-card{
+    max-width: 24vw;
+    background-color: orange;
+}

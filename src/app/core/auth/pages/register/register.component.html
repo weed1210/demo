@@ -1,0 +1,32 @@
+<form [formGroup]="memberRegisterForm" (ngSubmit)="onSubmit()">
+    <div>
+        <mat-form-field class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput type="text" formControlName="email">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field class="full-width">
+            <mat-label>Username</mat-label>
+            <input matInput type="text" formControlName="name">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput type="text" formControlName="password">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field class="full-width">
+            <mat-label>Phone Number</mat-label>
+            <input matInput type="text" formControlName="phoneNumber">
+        </mat-form-field>
+    </div>
+    <p>Complete the form to enable button.</p>
+    <button type="submit" mat-button [disabled]="!memberRegisterForm.valid"
+        cdkFocusInitial>Register</button>
+</form>
