@@ -8,6 +8,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { StoreModule } from '@ngrx/store';
+import { tasksReducer } from './states/tasks.reducer';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,10 @@ import { MatButtonModule } from '@angular/material/button';
     MatDividerModule,
     MatGridListModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    StoreModule.forRoot({
+      tasks: tasksReducer
+    })
   ],
   exports: [
     TaskComponent,

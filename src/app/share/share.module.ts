@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './layout/header/header.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { CustomDataSource } from './models/custom-data-source.model';
 
 @NgModule({
   declarations: [
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -18,7 +19,7 @@ import { RouterModule } from '@angular/router';
     RouterModule
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
   ]
 })
-export class LayoutModule { }
+export class ShareModule { }

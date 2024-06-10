@@ -24,8 +24,9 @@ export class HeaderComponent {
   ngOnInit(): void {
     this.store.select(selectMember).subscribe({
       next: member => {
+        console.log(member);
         this.loggedInMember = member;
-        if (member.UserID !== '') {
+        if (member?.UserID !== '') {
           this.loggedIn = true;
         }
         else {

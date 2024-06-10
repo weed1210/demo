@@ -4,14 +4,15 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TaskModule } from './features/task/task.module';
-import { LayoutModule } from './share/layout/layout.module';
-import { StoreModule } from '@ngrx/store';
-import { memberReducer } from './core/auth/states/members.reducer';
+import { ShareModule } from './share/share.module';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { apiInterceptor } from './core/interceptors/api.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './core/auth/auth.module';
+import { StoreModule } from '@ngrx/store';
+import { memberReducer } from './core/auth/states/members.reducer';
+import { tasksReducer } from './features/task/states/tasks.reducer';
 
 @NgModule({
   declarations: [
@@ -21,10 +22,11 @@ import { AuthModule } from './core/auth/auth.module';
     BrowserModule,
     AuthModule,
     TaskModule,
-    LayoutModule,
+    ShareModule,
     AppRoutingModule,
     StoreModule.forRoot({
-      member: memberReducer
+      member: memberReducer,
+      tasks: tasksReducer
     })
   ],
   providers: [
