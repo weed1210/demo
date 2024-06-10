@@ -1,20 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Task } from '../../models/task';
+import { TasksService } from '../../services/tasks.service';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'task-list',
   templateUrl: './task-list.component.html',
+  styleUrl: './task-list.component.css'
 })
 export class TaskListComponent {
-  tasks: Task[];
+  displayedColumns: string[] = ['id', 'title', 'description', 'dueDate', 'status', 'action'];
+  dataSource: Task[];
+  @ViewChild(MatTable) table: MatTable<Task>;
 
-  constructor() {
-    this.tasks = [
-      { id: 0, title: 'Task 0', description: 'A AAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAA', dueDate: new Date, status: 'new'},
-      { id: 0, title: 'Task 0', description: 'A AAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAA', dueDate: new Date, status: 'new'},
-      { id: 0, title: 'Task 0', description: 'A AAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAA', dueDate: new Date, status: 'new'},
-      { id: 0, title: 'Task 0', description: 'A AAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAA', dueDate: new Date, status: 'new'},
-      { id: 0, title: 'Task 0', description: 'A AAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAA', dueDate: new Date, status: 'new'},
-    ]
+  constructor(private tasksService: TasksService) {
+  }
+
+  ngOnInit(): void {
+    this.tasksService.get().subscribe({
+      next: res => {
+        console.log(res);
+        this.dataSource = res;
+      }
+    })
+  }
+
+  onDelete(id: number) {
+    this.tasksService.delete(id).subscribe({
+      next: res => {
+        console.log(res);
+        this.dataSource = this.dataSource.filter(x => x.id !== id);
+        this.table.renderRows();
+      }
+    })
   }
 }

@@ -6,6 +6,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatCardModule,
     MatProgressBarModule,
     MatDividerModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTableModule,
+    MatButtonModule
   ],
   exports: [
     TaskComponent,

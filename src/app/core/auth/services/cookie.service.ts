@@ -1,18 +1,27 @@
-import { Inject, Injectable } from '@angular/core';
+'use client'
+
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Dictionary } from '../../ultilities/models/dictionary';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CookieService {
   private cookieStore: Dictionary<string, string>;
+  isBrowser: boolean;
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
-    this.parseCookies(this.document.cookie);
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    if (this.isBrowser) {
+      this.parseCookies(this.document.cookie);
+    }
   }
 
-  public parseCookies(cookies = this.document.cookie) {
+  public parseCookies(cookies: string) {
     this.cookieStore = {
       data: []
     }
@@ -28,18 +37,27 @@ export class CookieService {
   }
 
   get(key: string) {
-    this.parseCookies();
-    let cookieData = !!this.cookieStore.data.find(x => x.key === key)
-      ? this.cookieStore.data.find(x => x.key === key)
-      : null;
-    return cookieData ? cookieData.value : null;
+    if (this.isBrowser) {
+      this.parseCookies(this.document.cookie);
+      let cookieData = !!this.cookieStore.data.find(x => x.key === key)
+        ? this.cookieStore.data.find(x => x.key === key)
+        : null;
+      return cookieData ? cookieData.value : null;
+    }
+    else {
+      return '';
+    }
   }
 
   remove(key: string) {
-    this.document.cookie = `${key} = ; expires=Thu, 1 jan 1990 12:00:00 UTC; path=/`;
+    if (this.isBrowser) {
+      this.document.cookie = `${key} = ; expires=Thu, 1 jan 1990 12:00:00 UTC; path=/`;
+    }
   }
 
   set(key: string, value: string) {
-    this.document.cookie = key + '=' + value;
+    if (this.isBrowser) {
+      this.document.cookie = key + '=' + value;
+    }
   }
 }

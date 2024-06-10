@@ -1,17 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
 import { MembersActions } from './members.action';
-import { Member } from '../models/member.model';
-import { state } from '@angular/animations';
+import { JwtPayload } from '../models/jwt-payload.model';
 
-let defaultMember: Member = {
-  id: '',
-  email: '',
-  password: '',
-  name: '',
-  phoneNumber: ''
+let defaultMember: JwtPayload = {
+  UserID: '',
+  Email: '',
+  PhoneNumber: ''
 }
 
-export const initialState: Readonly<Member> = defaultMember;
+export const initialState: Readonly<JwtPayload> = defaultMember;
 
 export const memberReducer = createReducer(
   initialState,

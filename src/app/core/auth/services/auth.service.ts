@@ -9,7 +9,6 @@ import { LoginRequest } from '../models/login.request';
   providedIn: 'root'
 })
 export class AuthService {
-
   constructor(private http: HttpClient) { }
 
   register(request: RegisterRequest): Observable<Member> {
@@ -22,12 +21,8 @@ export class AuthService {
     return this.http.post<{ access_token: string }>(
       'Users/Login', request
     )
-    .pipe(map(x => x.access_token));
-  }
-
-  getPosts(): Observable<any> {
-    return this.http.get<any>(
-      'Posts'
-    );
+      .pipe(
+        map(x => x.access_token)
+      );
   }
 }
