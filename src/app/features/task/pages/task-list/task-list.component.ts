@@ -1,13 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { Task } from '../../models/task';
+import { Task } from '../../models/task.model';
 import { TasksService } from '../../services/tasks.service';
 import { MatTable } from '@angular/material/table';
 import { CustomDataSource } from 'src/app/share/models/custom-data-source.model';
 import { Store } from '@ngrx/store';
 import { selectTasks } from '../../states/tasks.selector';
 import { TasksActions } from '../../states/tasks.action';
-import { Mutable } from 'src/app/share/models/mutable.model';
-import { combineLatest, mergeMap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'task-list',
@@ -22,7 +21,8 @@ export class TaskListComponent {
 
   constructor(
     private tasksService: TasksService,
-    private store: Store
+    private store: Store,
+    private router: Router,
   ) {
     this.store.select(selectTasks);
   }
@@ -50,5 +50,9 @@ export class TaskListComponent {
         this.store.dispatch(TasksActions.delete({ id: id }));
       }
     })
+  }
+
+  onCreate() {
+    this.router.navigate(["task-create"]);
   }
 }

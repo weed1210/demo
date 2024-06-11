@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { Task } from '../models/task';
+import { Task } from '../models/task.model';
 import { TasksActions } from './tasks.action';
 
 export const initialState: ReadonlyArray<Task> = [];

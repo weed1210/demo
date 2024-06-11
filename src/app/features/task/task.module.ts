@@ -8,29 +8,39 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-import { StoreModule } from '@ngrx/store';
-import { tasksReducer } from './states/tasks.reducer';
+import { TaskCreateComponent } from './pages/task-create/task-create.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule, MatDatepickerToggle } from '@angular/material/datepicker';
+import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
     TaskComponent,
-    TaskListComponent
+    TaskListComponent,
+    TaskCreateComponent
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+
     MatCardModule,
     MatProgressBarModule,
     MatDividerModule,
     MatGridListModule,
     MatTableModule,
     MatButtonModule,
-    StoreModule.forRoot({
-      tasks: tasksReducer
-    })
+    MatInputModule,
+    MatDatepickerModule,
+    MatDatepickerToggle,
+    MatCommonModule,
+    MatNativeDateModule
   ],
   exports: [
     TaskComponent,
-    TaskListComponent
+    TaskListComponent,
+    TaskCreateComponent
   ]
 })
 export class TaskModule { }

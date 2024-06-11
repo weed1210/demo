@@ -1,39 +1,100 @@
-import { TestBed, inject } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
-import { HttpClient } from '@angular/common/http';
+import { Member } from '../models/member.model';
 
 describe('AuthService', () => {
+    let authService: AuthService;
+    let httpMock: HttpTestingController;
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [AuthService]
+            providers: [
+                AuthService
+            ]
         });
+
+        authService = TestBed.inject(AuthService);
+        httpMock = TestBed.inject(HttpTestingController);
     });
-    it('should get users',
-        inject(
-            [HttpTestingController, AuthService],
-            (httpMock: HttpTestingController, dataService: AuthService) => {
-                const mockJwt = '';
 
-                dataService.login({
-                    userName: "f",
-                    password: "f",
-                }).subscribe({
-                    error: (err) => {
-                        console.error('Error:', err);
-                        expect(err.status).toBe(500);
-                    }
-                });
+    afterEach(() => {
+        httpMock.verify(); // Ensure no outstanding HTTP requests
+    });
 
-                const mockReq = httpMock.expectOne('Users/Login');
+    it('should fail login', () => {
+        const errorMessage = 'Username or password is not valid';
 
-                expect(mockReq.cancelled).toBeFalsy();
-                expect(mockReq.request.responseType).toEqual('json');
-                mockReq.flush(mockJwt);
-
-                httpMock.verify();
+        authService.login({
+            userName: "",
+            password: "",
+        }).subscribe({
+            next: () => {
+                fail('expected an error, not a successful response');
+            },
+            error: err => {
+                console.error('Error:', err);
+                expect(err.status).toBe(500);
             }
-        )
+        });
+
+        const mockReq = httpMock.expectOne('Users/Login');
+        expect(mockReq.request.method).toBe('POST');
+        expect(mockReq.cancelled).toBeFalsy();
+        expect(mockReq.request.responseType).toEqual('json');
+        mockReq.flush({ error: errorMessage }, { status: 500, statusText: '' });
+    }
     );
+
+    it('should return jwt token', () => {
+        const mockJwt = { access_token: "" };
+        httpMock.verify();
+
+        authService.login({
+            userName: "",
+            password: "",
+        }).subscribe({
+            next: res => {
+                console.log(res);
+                expect(res).toEqual(mockJwt.access_token);
+            },
+            error: () => {
+                fail('expected an successful response, not an error');
+            }
+        });
+
+        const mockReq = httpMock.expectOne('Users/Login');
+        expect(mockReq.request.method).toBe('POST');
+        expect(mockReq.cancelled).toBeFalsy();
+        expect(mockReq.request.responseType).toEqual('json');
+        mockReq.flush(mockJwt);
+    });
+
+    it('should return registered member', () => {
+        const mockMember: Member = {
+            id: '',
+            email: '',
+            password: '',
+            name: '',
+            phoneNumber: '',
+        };
+        authService.register({
+            email: '',
+            phoneNumber: '',
+            password: '',
+            name: ''
+        }).subscribe({
+            next: (res) => {
+                console.log(res);
+                expect(res).toEqual(mockMember);
+            }
+        });
+
+        const mockReq = httpMock.expectOne('Members/Register');
+        expect(mockReq.request.method).toBe('POST');
+        expect(mockReq.cancelled).toBeFalsy();
+        expect(mockReq.request.responseType).toEqual('json');
+        mockReq.flush(mockMember);
+    });
 });

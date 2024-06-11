@@ -26,7 +26,7 @@ export class HeaderComponent {
       next: member => {
         console.log(member);
         this.loggedInMember = member;
-        if (member?.UserID !== '') {
+        if (member?.UserId !== '') {
           this.loggedIn = true;
         }
         else {
@@ -39,7 +39,7 @@ export class HeaderComponent {
   logout() {
     this.cookieService.remove(AUTHENTICATION_JWT);
     this.store.dispatch(MembersActions.logout({
-      id: this.loggedInMember.UserID
+      id: this.loggedInMember.UserId
     }));
     this.router.navigate(['login']);
   }

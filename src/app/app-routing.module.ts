@@ -4,11 +4,13 @@ import { LoginComponent } from './core/auth/pages/login/login.component';
 import { RegisterComponent } from './core/auth/pages/register/register.component';
 import { TaskListComponent } from './features/task/pages/task-list/task-list.component';
 import { authGuard } from './core/auth/guards/auth.guard';
+import { TaskCreateComponent } from './features/task/pages/task-create/task-create.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'tasks', component: TaskListComponent, canActivate: [authGuard] },
+  { path: 'task-create', component: TaskCreateComponent, canActivate: [authGuard] },
   { path: '',   redirectTo: '/tasks', pathMatch: 'full' }
 ];
 

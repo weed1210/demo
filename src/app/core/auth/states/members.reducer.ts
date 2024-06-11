@@ -3,7 +3,7 @@ import { MembersActions } from './members.action';
 import { JwtPayload } from '../models/jwt-payload.model';
 
 let defaultMember: JwtPayload = {
-  UserID: '',
+  UserId: '',
   Email: '',
   PhoneNumber: ''
 }

@@ -8,7 +8,6 @@ import { Store } from '@ngrx/store';
 import { MembersActions } from '../../states/members.action';
 import { jwtDecode } from 'jwt-decode';
 import { JwtPayload } from '../../models/jwt-payload.model';
-import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +15,6 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  isBrowser: boolean;
 
   constructor(
     private memberService: AuthService,
