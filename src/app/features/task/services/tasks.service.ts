@@ -11,14 +11,30 @@ export class TasksService {
 
   constructor(private http: HttpClient) { }
 
-  get(): Observable<Task[]> {
+  get(memberId: string): Observable<Task[]> {
     return this.http.get<Task[]>(
-      'Tasks'
+      'Tasks', {
+        params: {
+          memberId: memberId
+        }
+      }
+    );
+  }
+
+  getOne(id: number): Observable<Task> {
+    return this.http.get<Task>(
+      `Tasks/${id}`
     );
   }
 
   create(req: TaskCreateRequest): Observable<Task> {
     return this.http.post<Task>(
+      'Tasks', req
+    );
+  }
+
+  update(req: Task): Observable<Task> {
+    return this.http.put<Task>(
       'Tasks', req
     );
   }

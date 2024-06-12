@@ -1,0 +1,4 @@
+<ng-container *ngIf="taskEditForm">
+    <app-task-form [taskForm]="taskEditForm" (onSubmit)="onSubmit($event)" originalPath="task-edit"></app-task-form>
+</ng-container>
+

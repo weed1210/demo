@@ -7,6 +7,8 @@ import { Store } from '@ngrx/store';
 import { selectTasks } from '../../states/tasks.selector';
 import { TasksActions } from '../../states/tasks.action';
 import { Router } from '@angular/router';
+import { selectMember } from 'src/app/core/auth/states/members.selector';
+import { filter, switchMap } from 'rxjs';
 
 @Component({
   selector: 'task-list',
@@ -15,7 +17,6 @@ import { Router } from '@angular/router';
 })
 export class TaskListComponent {
   displayedColumns: string[] = ['id', 'title', 'description', 'dueDate', 'status', 'action'];
-  tasks: Task[];
   dataSource = new CustomDataSource<Task>([]);
   @ViewChild(MatTable) table: MatTable<Task>;
 
@@ -28,12 +29,18 @@ export class TaskListComponent {
   }
 
   ngOnInit(): void {
-    this.tasksService.get().subscribe({
-      next: res => {
-        console.log(res);
-        this.store.dispatch(TasksActions.get({ tasks: res }));
-      }
-    });
+    this.store.select(selectMember)
+      .pipe(
+        switchMap(member => {
+          return this.tasksService.get(member.UserId);
+        })
+      )
+      .subscribe({
+        next: res => {
+          console.log(res);
+          this.store.dispatch(TasksActions.get({ tasks: res }));
+        }
+      });
 
     this.store.select(selectTasks).subscribe({
       next: res => {
@@ -54,5 +61,9 @@ export class TaskListComponent {
 
   onCreate() {
     this.router.navigate(["task-create"]);
+  }
+
+  onEdit(id: number) {
+    this.router.navigate(['/task-edit', { id: id }]);
   }
 }

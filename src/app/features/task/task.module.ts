@@ -14,12 +14,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule, MatDatepickerToggle } from '@angular/material/datepicker';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
 import { ShareModule } from 'src/app/share/share.module';
+import { TaskFormComponent } from './components/task-form/task-form.component';
+import { TaskEditComponent } from './pages/task-edit/task-edit.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
     TaskComponent,
     TaskListComponent,
-    TaskCreateComponent
+    TaskCreateComponent,
+    TaskFormComponent,
+    TaskEditComponent
   ],
   imports: [
     CommonModule,
@@ -37,12 +42,14 @@ import { ShareModule } from 'src/app/share/share.module';
     MatDatepickerModule,
     MatDatepickerToggle,
     MatCommonModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
   ],
   exports: [
     TaskComponent,
     TaskListComponent,
-    TaskCreateComponent
+    TaskCreateComponent,
+    TaskEditComponent
   ]
 })
 export class TaskModule { }

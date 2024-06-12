@@ -13,6 +13,7 @@ import { AuthModule } from './core/auth/auth.module';
 import { StoreModule } from '@ngrx/store';
 import { memberReducer } from './core/auth/states/members.reducer';
 import { tasksReducer } from './features/task/states/tasks.reducer';
+import { provideRouter } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { tasksReducer } from './features/task/states/tasks.reducer';
     provideHttpClient(
       withFetch(),
       withInterceptors([apiInterceptor, errorInterceptor])
-    )
+    ),
   ],
   bootstrap: [AppComponent]
 })

@@ -11,12 +11,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DateInputComponent } from './components/date-input/date-input.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
+import { SelectInputComponent } from './components/select-input/select-input.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     TextInputComponent,
-    DateInputComponent
+    DateInputComponent,
+    SelectInputComponent
   ],
   imports: [
     CommonModule,
@@ -28,12 +31,14 @@ import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatCommonModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
   ],
   exports: [
     HeaderComponent,
     TextInputComponent,
-    DateInputComponent
+    DateInputComponent,
+    SelectInputComponent
   ]
 })
 export class ShareModule { }

@@ -1,0 +1,22 @@
+<div>
+    <form [formGroup]="taskForm" (ngSubmit)="submit()">
+        <app-text-input type="text" property="title" [form]="taskForm" label="Title"
+            [validationErrors]="titleValidationError"></app-text-input>
+
+        <app-text-input type="text" property="description" [form]="taskForm" label="Description"
+            [validationErrors]="descriptionValidationError"></app-text-input>
+
+        <app-date-input property="dueDate" [form]="taskForm" label="Due Date"
+            [validationErrors]="dueDateValidationError"></app-date-input>
+
+        <app-text-input type="number" property="priority" [form]="taskForm" label="Priority"
+            [validationErrors]="priorityValidationError"></app-text-input>
+
+        <app-select-input *ngIf="originalPath==='task-edit'" property="status" [form]="taskForm" label="Status"
+            [options]="statusOptions"></app-select-input>
+
+        <p>Complete the form to enable button.</p>
+        <button type="submit" mat-flat-button [disabled]="!taskForm.valid" cdkFocusInitial>Create</button>
+        <button mat-flat-button (click)="onBack()" cdkFocusInitial>Back</button>
+    </form>
+</div>

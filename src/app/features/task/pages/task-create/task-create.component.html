@@ -1,18 +1,1 @@
-<div>
-    <form [formGroup]="taskCreateForm" (ngSubmit)="onSubmit()">
-        <app-text-input type="text" property="title" [form]="taskCreateForm" label="Title"
-            [validationErrors]="titleValidationError"></app-text-input>
-
-        <app-text-input type="text" property="description" [form]="taskCreateForm" label="Description"
-            [validationErrors]="descriptionValidationError"></app-text-input>
-
-        <app-date-input property="dueDate" [form]="taskCreateForm" label="Due Date"
-            [validationErrors]="dueDateValidationError"></app-date-input>
-
-        <app-text-input type="number" property="priority" [form]="taskCreateForm" label="Priority"
-            [validationErrors]="priorityValidationError"></app-text-input>
-
-        <p>Complete the form to enable button.</p>
-        <button type="submit" mat-button [disabled]="!taskCreateForm.valid" cdkFocusInitial>Create</button>
-    </form>
-</div>
+<app-task-form [taskForm]="taskCreateForm" (onSubmit)="onSubmit($event)" originalPath="task-create"></app-task-form>
