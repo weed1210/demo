@@ -1,6 +1,6 @@
 import type { HttpInterceptorFn } from '@angular/common/http';
 import { CookieService } from '../auth/services/cookie.service';
-import { AUTHENTICATION_JWT } from '../ultilities/consts/cookie-key';
+import { AUTHENTICATION_JWT } from '../../share/consts/cookie-key';
 import { inject } from '@angular/core';
 
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {

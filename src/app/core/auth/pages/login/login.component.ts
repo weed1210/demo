@@ -1,13 +1,14 @@
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { CookieService } from '../../services/cookie.service';
-import { AUTHENTICATION_JWT } from 'src/app/core/ultilities/consts/cookie-key';
+import { AUTHENTICATION_JWT } from 'src/app/share/consts/cookie-key';
 import { Store } from '@ngrx/store';
 import { MembersActions } from '../../states/members.action';
 import { jwtDecode } from 'jwt-decode';
 import { JwtPayload } from '../../models/jwt-payload.model';
+import { Dictionary } from 'src/app/share/models/dictionary.model';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,28 @@ import { JwtPayload } from '../../models/jwt-payload.model';
 export class LoginComponent {
   loginForm: FormGroup;
 
+  userNameValidationError: Dictionary<string, string> = {
+    data: [
+      {
+        key: 'required',
+        value: 'Email is required.'
+      },
+      {
+        key: 'email',
+        value: 'Must be in email format.'
+      }
+    ]
+  }
+
+  passwordValidationError: Dictionary<string, string> = {
+    data: [
+      {
+        key: 'required',
+        value: 'Password is required.'
+      }
+    ]
+  }
+
   constructor(
     private memberService: AuthService,
     private cookieService: CookieService,
@@ -23,9 +46,20 @@ export class LoginComponent {
     private store: Store,
   ) {
     this.loginForm = new FormGroup({
-      userName: new FormControl(''),
-      password: new FormControl(''),
+      userName: new FormControl('', [
+        Validators.required,
+        Validators.email
+      ]),
+      password: new FormControl('', Validators.required),
     });
+  }
+
+  get userName() {
+    return this.loginForm.get('userName');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
   }
 
   onSubmit() {

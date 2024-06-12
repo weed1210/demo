@@ -1,34 +1,18 @@
-<form [formGroup]="taskCreateForm" (ngSubmit)="onSubmit()">
-    <div>
-        <mat-form-field class="full-width">
-            <mat-label>
-                <Title></Title>
-            </mat-label>
-            <input matInput type="text" formControlName="title">
-        </mat-form-field>
-    </div>
+<div>
+    <form [formGroup]="taskCreateForm" (ngSubmit)="onSubmit()">
+        <app-text-input type="text" property="title" [form]="taskCreateForm" label="Title"
+            [validationErrors]="titleValidationError"></app-text-input>
 
-    <div>
-        <mat-form-field class="full-width">
-            <mat-label>Description</mat-label>
-            <input matInput type="text" formControlName="description">
-        </mat-form-field>
-    </div>
+        <app-text-input type="text" property="description" [form]="taskCreateForm" label="Description"
+            [validationErrors]="descriptionValidationError"></app-text-input>
 
-    <div>
-        <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="Due Date" class="full-width" formControlName="dueDate">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-    </div>
+        <app-date-input property="dueDate" [form]="taskCreateForm" label="Due Date"
+            [validationErrors]="dueDateValidationError"></app-date-input>
 
-    <div>
-        <mat-form-field class="full-width">
-            <mat-label>Priority</mat-label>
-            <input matInput type="number" formControlName="priority">
-        </mat-form-field>
-    </div>
-    <p>Complete the form to enable button.</p>
-    <button type="submit" mat-button [disabled]="!taskCreateForm.valid" cdkFocusInitial>Login</button>
-</form>
+        <app-text-input type="number" property="priority" [form]="taskCreateForm" label="Priority"
+            [validationErrors]="priorityValidationError"></app-text-input>
+
+        <p>Complete the form to enable button.</p>
+        <button type="submit" mat-button [disabled]="!taskCreateForm.valid" cdkFocusInitial>Create</button>
+    </form>
+</div>

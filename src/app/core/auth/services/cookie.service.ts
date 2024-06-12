@@ -1,7 +1,7 @@
 'use client'
 
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Dictionary } from '../../ultilities/models/dictionary';
+import { Dictionary } from '../../../share/models/dictionary.model';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 export class CookieService {
   private cookieStore: Dictionary<string, string>;
   isBrowser: boolean;
-
+  
   constructor(
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: Object

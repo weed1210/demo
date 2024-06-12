@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { Dictionary } from 'src/app/share/models/dictionary.model';
 
 @Component({
   selector: 'auth-register-tab',
@@ -9,13 +10,62 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   memberRegisterForm: FormGroup;
+  emailValidationError: Dictionary<string, string> = {
+    data: [
+      {
+        key: 'required',
+        value: 'Email is required.'
+      },
+      {
+        key: 'email',
+        value: 'Must be in email format.'
+      }
+    ]
+  };
+
+  nameValidationError: Dictionary<string, string> = {
+    data: [
+      {
+        key: 'required',
+        value: 'Name is required.'
+      }
+    ]
+  };
+
+  passwordValidationError: Dictionary<string, string> = {
+    data: [
+      {
+        key: 'required',
+        value: 'Password is required.'
+      }
+    ]
+  };
+
+  phoneNumberValidationError: Dictionary<string, string> = {
+    data: [
+      {
+        key: 'required',
+        value: 'Phonenumber is required.'
+      },
+      {
+        key: 'email',
+        value: 'Phonenumber must be 10 digit format.'
+      }
+    ]
+  };
 
   constructor(private memberService: AuthService, private router: Router) {
     this.memberRegisterForm = new FormGroup({
-      email: new FormControl(''),
-      name: new FormControl(''),
-      password: new FormControl(''),
-      phoneNumber: new FormControl(''),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.email
+      ]),
+      name: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+      phoneNumber: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^[0-9]{10}$"),
+      ]),
     });
   }
 

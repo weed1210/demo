@@ -1,32 +1,16 @@
 <form [formGroup]="memberRegisterForm" (ngSubmit)="onSubmit()">
-    <div>
-        <mat-form-field class="full-width">
-            <mat-label>Email</mat-label>
-            <input matInput type="text" formControlName="email">
-        </mat-form-field>
-    </div>
+    <app-text-input type="email" property="email" [form]="memberRegisterForm" label="Email"
+        [validationErrors]="emailValidationError"></app-text-input>
 
-    <div>
-        <mat-form-field class="full-width">
-            <mat-label>Username</mat-label>
-            <input matInput type="text" formControlName="name">
-        </mat-form-field>
-    </div>
+    <app-text-input type="text" property="name" [form]="memberRegisterForm" label="Username"
+        [validationErrors]="nameValidationError"></app-text-input>
 
-    <div>
-        <mat-form-field class="full-width">
-            <mat-label>Password</mat-label>
-            <input matInput type="text" formControlName="password">
-        </mat-form-field>
-    </div>
+    <app-text-input type="password" property="password" [form]="memberRegisterForm" label="Password"
+        [validationErrors]="passwordValidationError"></app-text-input>
 
-    <div>
-        <mat-form-field class="full-width">
-            <mat-label>Phone Number</mat-label>
-            <input matInput type="text" formControlName="phoneNumber">
-        </mat-form-field>
-    </div>
+    <app-text-input type="text" property="phoneNumber" [form]="memberRegisterForm" label="Phone Number"
+        [validationErrors]="phoneNumberValidationError"></app-text-input>
+
     <p>Complete the form to enable button.</p>
-    <button type="submit" mat-button [disabled]="!memberRegisterForm.valid"
-        cdkFocusInitial>Register</button>
+    <button type="submit" mat-button [disabled]="!memberRegisterForm.valid" cdkFocusInitial>Register</button>
 </form>

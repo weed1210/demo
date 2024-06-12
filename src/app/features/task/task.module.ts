@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule, MatDatepickerToggle } from '@angular/material/datepicker';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
+import { ShareModule } from 'src/app/share/share.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    ShareModule,
 
     MatCardModule,
     MatProgressBarModule,

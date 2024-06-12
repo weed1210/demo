@@ -1,18 +1,11 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div>
-        <mat-form-field class="full-width">
-            <mat-label>Email</mat-label>
-            <input matInput type="text" formControlName="userName">
-        </mat-form-field>
+        <app-text-input type="text" property="userName" [form]="loginForm"
+            [validationErrors]="userNameValidationError" label="Email"></app-text-input>
+        
+        <app-text-input type="password" property="password" [form]="loginForm"
+            [validationErrors]="passwordValidationError" label="Password"></app-text-input>
+        <p>Complete the form to enable button.</p>
+        <button type="submit" mat-button [disabled]="!loginForm.valid" cdkFocusInitial>Login</button>
     </div>
-
-    <div>
-        <mat-form-field class="full-width">
-            <mat-label>Password</mat-label>
-            <input matInput type="text" formControlName="password">
-        </mat-form-field>
-    </div>
-    <p>Complete the form to enable button.</p>
-    <button type="submit" mat-button [disabled]="!loginForm.valid"
-        cdkFocusInitial>Login</button>
 </form>
