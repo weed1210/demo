@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Dictionary } from 'src/app/share/models/dictionary.model';
+import { ErrorDialogComponent } from 'src/app/share/components/error-dialog/error-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'auth-register-tab',
@@ -54,7 +56,7 @@ export class RegisterComponent {
     ]
   };
 
-  constructor(private memberService: AuthService, private router: Router) {
+  constructor(private memberService: AuthService, private router: Router, private dialog: MatDialog) {
     this.memberRegisterForm = new FormGroup({
       email: new FormControl('', [
         Validators.required,
@@ -81,6 +83,9 @@ export class RegisterComponent {
         },
         error: err => {
           console.log(err);
+          this.dialog.open(ErrorDialogComponent, {
+            data: err.Message
+          });
         }
       });
   }

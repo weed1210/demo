@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Task } from '../models/task.model';
 import { TaskCreateRequest } from '../models/task-create.request';
+import { TaskGetRequest } from '../models/task-get.request';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,15 @@ export class TasksService {
 
   constructor(private http: HttpClient) { }
 
-  get(memberId: string): Observable<Task[]> {
+  get(request: TaskGetRequest): Observable<Task[]> {
     return this.http.get<Task[]>(
       'Tasks', {
         params: {
-          memberId: memberId
+          memberId: request.memberId,
+          searchValue: request.searchValue,
+          selectedStatus: request.selectedStatus,
+          sortKey: request.sortKey,
+          sortOrder: request.sortOrder
         }
       }
     );

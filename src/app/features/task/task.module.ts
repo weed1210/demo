@@ -17,6 +17,8 @@ import { ShareModule } from 'src/app/share/share.module';
 import { TaskFormComponent } from './components/task-form/task-form.component';
 import { TaskEditComponent } from './pages/task-edit/task-edit.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatDatepickerToggle,
     MatCommonModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule,
+    MatSortModule
   ],
   exports: [
     TaskComponent,

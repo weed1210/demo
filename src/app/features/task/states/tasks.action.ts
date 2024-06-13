@@ -10,3 +10,10 @@ export const TasksActions = createActionGroup({
     'Delete': props<{ id: number }>(),
   },
 });
+
+export const TaskSearchAction = createActionGroup({
+  source: 'TaskSearchValue',
+  events: {
+    'Search': props<{ searchValue: string }>(),
+  },
+});

@@ -9,6 +9,8 @@ import { MembersActions } from '../../states/members.action';
 import { jwtDecode } from 'jwt-decode';
 import { JwtPayload } from '../../models/jwt-payload.model';
 import { Dictionary } from 'src/app/share/models/dictionary.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from 'src/app/share/components/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -44,6 +46,7 @@ export class LoginComponent {
     private cookieService: CookieService,
     private router: Router,
     private store: Store,
+    private dialog: MatDialog
   ) {
     this.loginForm = new FormGroup({
       userName: new FormControl('', [
@@ -79,6 +82,9 @@ export class LoginComponent {
         },
         error: err => {
           console.log(err);
+          this.dialog.open(ErrorDialogComponent, {
+            data: err.Message
+          });
         }
       });
   }

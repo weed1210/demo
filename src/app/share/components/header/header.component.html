@@ -1,7 +1,11 @@
 <mat-grid-list cols="8" rowHeight="10vh" style="background-color: red;">
     <mat-grid-tile colspan="2">Task Management</mat-grid-tile>
-    <mat-grid-tile colspan="4"></mat-grid-tile>
     <ng-container *ngIf="loggedIn; else unauthorize">
+        <mat-grid-tile colspan="4">
+            <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+                <app-text-input type="text" property="searchValue" [form]="searchForm" label="Task Title or Description"></app-text-input>
+            </form>
+        </mat-grid-tile>
         <mat-grid-tile colspan="2">
             <button mat-flat-button (click)="logout()">
                 Logout
@@ -9,6 +13,7 @@
         </mat-grid-tile>
     </ng-container>
     <ng-template #unauthorize>
+        <mat-grid-tile colspan="4"></mat-grid-tile>
         <mat-grid-tile>
             <a routerLink="/login" routerLinkActive="active" mat-flat-button>
                 Login

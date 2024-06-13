@@ -13,13 +13,16 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
 import { SelectInputComponent } from './components/select-input/select-input.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     TextInputComponent,
     DateInputComponent,
-    SelectInputComponent
+    SelectInputComponent,
+    ErrorDialogComponent
   ],
   imports: [
     CommonModule,
@@ -32,13 +35,15 @@ import { MatSelectModule } from '@angular/material/select';
     MatDatepickerModule,
     MatCommonModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule
   ],
   exports: [
     HeaderComponent,
     TextInputComponent,
     DateInputComponent,
-    SelectInputComponent
+    SelectInputComponent,
+    ErrorDialogComponent
   ]
 })
 export class ShareModule { }

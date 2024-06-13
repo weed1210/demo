@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration, withHttpTransferCacheOptions } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './core/auth/auth.module';
 import { StoreModule } from '@ngrx/store';
 import { memberReducer } from './core/auth/states/members.reducer';
-import { tasksReducer } from './features/task/states/tasks.reducer';
+import { taskSearchValueReducer, tasksReducer } from './features/task/states/tasks.reducer';
 import { provideRouter } from '@angular/router';
 
 @NgModule({
@@ -27,11 +27,15 @@ import { provideRouter } from '@angular/router';
     AppRoutingModule,
     StoreModule.forRoot({
       member: memberReducer,
-      tasks: tasksReducer
+      
+      tasks: tasksReducer,
+      taskSearchValue: taskSearchValueReducer
     })
   ],
   providers: [
-    provideClientHydration(),
+    provideClientHydration(withHttpTransferCacheOptions({
+      includePostRequests: true
+    })),
     provideAnimationsAsync(),
     provideHttpClient(
       withFetch(),

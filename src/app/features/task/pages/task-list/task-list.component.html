@@ -1,35 +1,36 @@
 <button mat-flat-button (click)="onCreate()">Create New Task</button>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<ng-container *ngIf="selectStatusForm">
+    <app-select-input property="status" [form]="selectStatusForm" label="Status"
+        [options]="statusOptions"></app-select-input>
+</ng-container>
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-
-    <!-- Position Column -->
+<table mat-table [dataSource]="dataSource" matSort matSortActive="priority" matSortStart="desc" matSortDisableClear class="mat-elevation-z8" (matSortChange)="onSortChange($event)">
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> No. </th>
         <td mat-cell *matCellDef="let element"> {{element.id}} </td>
     </ng-container>
 
-    <!-- Name Column -->
     <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef> Title </th>
         <td mat-cell *matCellDef="let element"> {{element.title}} </td>
     </ng-container>
 
-    <!-- Weight Column -->
+    <ng-container matColumnDef="priority">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Priority </th>
+        <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef> Description </th>
         <td mat-cell *matCellDef="let element"> {{element.description}} </td>
     </ng-container>
 
-    <!-- Symbol Column -->
     <ng-container matColumnDef="dueDate">
         <th mat-header-cell *matHeaderCellDef> Due Date </th>
         <td mat-cell *matCellDef="let element"> {{element.dueDate | date: 'dd/MM/yyyy HH:mm:ss'}} </td>
     </ng-container>
 
-    <!-- Symbol Column -->
     <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> Status </th>
         <td mat-cell *matCellDef="let element"> {{element.status}} </td>

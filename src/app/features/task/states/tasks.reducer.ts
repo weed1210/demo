@@ -1,11 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import { Task } from '../models/task.model';
-import { TasksActions } from './tasks.action';
+import { TaskSearchAction, TasksActions } from './tasks.action';
 
-export const initialState: ReadonlyArray<Task> = [];
+const initialTasksState: ReadonlyArray<Task> = [];
 
 export const tasksReducer = createReducer(
-  initialState,
+  initialTasksState,
   on(TasksActions.get, (state, { tasks }) => {
     console.log("get");
     state = tasks
@@ -23,4 +23,14 @@ export const tasksReducer = createReducer(
     console.log("delete");
     return state.filter(task => task.id !== id);
   })
+);
+
+const initialSearchValueState: Readonly<string> = '';
+export const taskSearchValueReducer = createReducer(
+  initialSearchValueState,
+  on(TaskSearchAction.search, (state, { searchValue }) => {
+    console.log("search value: ", searchValue);
+    state = searchValue
+    return state;
+  }),
 );
