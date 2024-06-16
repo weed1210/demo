@@ -39,6 +39,10 @@ export class RegisterComponent {
       {
         key: 'required',
         value: 'Password is required.'
+      },
+      {
+        key: 'pattern',
+        value: 'Password is atlest 8 character with lowercase, uppercase, number, special.'
       }
     ]
   };
@@ -50,20 +54,23 @@ export class RegisterComponent {
         value: 'Phonenumber is required.'
       },
       {
-        key: 'email',
+        key: 'pattern',
         value: 'Phonenumber must be 10 digit format.'
       }
     ]
   };
 
-  constructor(private memberService: AuthService, private router: Router, private dialog: MatDialog) {
+  constructor(public authService: AuthService, public router: Router, public dialog: MatDialog) {
     this.memberRegisterForm = new FormGroup({
       email: new FormControl('', [
         Validators.required,
         Validators.email
       ]),
       name: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$")
+      ]),
       phoneNumber: new FormControl('', [
         Validators.required,
         Validators.pattern("^[0-9]{10}$"),
@@ -73,18 +80,16 @@ export class RegisterComponent {
 
   onSubmit() {
     let request = this.memberRegisterForm.value;
-    console.warn(request);
 
-    this.memberService.register(request)
+    this.authService.register(request)
       .subscribe({
         next: res => {
           console.log(res);
           this.router.navigate(["login"]);
         },
-        error: err => {
-          console.log(err);
+        error: (err: Error) => {
           this.dialog.open(ErrorDialogComponent, {
-            data: err.Message
+            data: err.message
           });
         }
       });

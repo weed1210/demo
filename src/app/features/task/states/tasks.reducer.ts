@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { Task } from '../models/task.model';
 import { TaskSearchAction, TasksActions } from './tasks.action';
 
-const initialTasksState: ReadonlyArray<Task> = [];
+export const initialTasksState: ReadonlyArray<Task> = [];
 
 export const tasksReducer = createReducer(
   initialTasksState,
@@ -25,9 +25,9 @@ export const tasksReducer = createReducer(
   })
 );
 
-const initialSearchValueState: Readonly<string> = '';
+export const initialTaskSearchValueState: Readonly<string> = '';
 export const taskSearchValueReducer = createReducer(
-  initialSearchValueState,
+  initialTaskSearchValueState,
   on(TaskSearchAction.search, (state, { searchValue }) => {
     console.log("search value: ", searchValue);
     state = searchValue

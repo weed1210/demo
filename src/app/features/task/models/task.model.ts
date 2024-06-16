@@ -6,4 +6,6 @@ export interface Task {
     status: string;
     priority: number;
     memberId: string;
+    coperatorId?: string;
+    isUserTask?: boolean;
 }

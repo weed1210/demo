@@ -1,7 +1,7 @@
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { AuthService } from './auth.service';
 import { Member } from '../models/member.model';
+import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
     let authService: AuthService;
@@ -96,5 +96,21 @@ describe('AuthService', () => {
         expect(mockReq.cancelled).toBeFalsy();
         expect(mockReq.request.responseType).toEqual('json');
         mockReq.flush(mockMember);
+    });
+
+    it('should return members', () => {
+        const mockMembers: Member[] = [];
+        authService.getMembers().subscribe({
+            next: (res) => {
+                console.log(res);
+                expect(res).toEqual([]);
+            }
+        });
+
+        const mockReq = httpMock.expectOne('Members');
+        expect(mockReq.request.method).toBe('GET');
+        expect(mockReq.cancelled).toBeFalsy();
+        expect(mockReq.request.responseType).toEqual('json');
+        mockReq.flush(mockMembers);
     });
 });

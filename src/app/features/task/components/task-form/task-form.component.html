@@ -15,6 +15,9 @@
         <app-select-input *ngIf="originalPath==='task-edit'" property="status" [form]="taskForm" label="Status"
             [options]="statusOptions"></app-select-input>
 
+        <app-select-input property="coperatorId" [form]="taskForm" label="Coperator"
+            [options]="coperatorOptions"></app-select-input>
+
         <p>Complete the form to enable button.</p>
         <button type="submit" mat-flat-button [disabled]="!taskForm.valid" cdkFocusInitial>Create</button>
         <button mat-flat-button (click)="onBack()" cdkFocusInitial>Back</button>

@@ -5,4 +5,5 @@ export interface TaskCreateRequest {
     status: string;
     priority: number;
     memberId: string;
+    coperatorId?: string;
 }

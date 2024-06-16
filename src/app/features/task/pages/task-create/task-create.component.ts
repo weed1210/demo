@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { TasksService } from '../../services/tasks.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectMember } from 'src/app/core/auth/states/members.selector';
-import { Dictionary } from 'src/app/share/models/dictionary.model';
 import { Task } from '../../models/task.model';
+import { TasksService } from '../../services/tasks.service';
 import { TasksActions } from '../../states/tasks.action';
 
 @Component({
@@ -17,9 +16,9 @@ export class TaskCreateComponent {
   taskCreateForm: FormGroup;
 
   constructor(
-    private tasksService: TasksService,
+    public tasksService: TasksService,
+    public store: Store,
     private router: Router,
-    private store: Store,
   ) { }
 
   ngOnInit() {
@@ -36,6 +35,7 @@ export class TaskCreateComponent {
             Validators.min(0)
           ]),
           memberId: new FormControl(member.UserId),
+          coperatorId: new FormControl(undefined),
         });
       }
     })

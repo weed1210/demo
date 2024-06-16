@@ -27,20 +27,18 @@ export class HeaderComponent {
   ) { }
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.store.select(selectMember).subscribe({
-        next: member => {
-          console.log(member);
-          this.loggedInMember = member;
-          if (member?.UserId !== '') {
-            this.loggedIn = true;
-          }
-          else {
-            this.loggedIn = false;
-          }
+    this.store.select(selectMember).subscribe({
+      next: member => {
+        console.log(member);
+        this.loggedInMember = member;
+        if (member?.UserId !== '') {
+          this.loggedIn = true;
         }
-      });
-    }
+        else {
+          this.loggedIn = false;
+        }
+      }
+    });
 
     this.searchForm = new FormGroup({
       searchValue: new FormControl(''),

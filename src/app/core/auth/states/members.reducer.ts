@@ -8,10 +8,10 @@ let defaultMember: JwtPayload = {
   PhoneNumber: ''
 }
 
-export const initialState: Readonly<JwtPayload> = defaultMember;
+export const initialMemberState: Readonly<JwtPayload> = defaultMember;
 
 export const memberReducer = createReducer(
-  initialState,
+  initialMemberState,
   on(MembersActions.logout, (state, { id }) =>
     state = defaultMember
   ),

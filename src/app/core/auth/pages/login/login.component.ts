@@ -42,11 +42,11 @@ export class LoginComponent {
   }
 
   constructor(
-    private memberService: AuthService,
-    private cookieService: CookieService,
-    private router: Router,
-    private store: Store,
-    private dialog: MatDialog
+    public authService: AuthService,
+    public cookieService: CookieService,
+    public router: Router,
+    public store: Store,
+    public dialog: MatDialog
   ) {
     this.loginForm = new FormGroup({
       userName: new FormControl('', [
@@ -57,19 +57,10 @@ export class LoginComponent {
     });
   }
 
-  get userName() {
-    return this.loginForm.get('userName');
-  }
-
-  get password() {
-    return this.loginForm.get('password');
-  }
-
   onSubmit() {
     let request = this.loginForm.value;
-    console.warn(request);
 
-    this.memberService.login(request)
+    this.authService.login(request)
       .subscribe({
         next: res => {
           console.log(res);
@@ -80,10 +71,9 @@ export class LoginComponent {
           }));
           this.router.navigate(['tasks']);
         },
-        error: err => {
-          console.log(err);
+        error: (err: Error) => {
           this.dialog.open(ErrorDialogComponent, {
-            data: err.Message
+            data: err.message
           });
         }
       });

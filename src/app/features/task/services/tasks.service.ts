@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Task } from '../models/task.model';
 import { TaskCreateRequest } from '../models/task-create.request';
 import { TaskGetRequest } from '../models/task-get.request';
@@ -15,14 +15,19 @@ export class TasksService {
   get(request: TaskGetRequest): Observable<Task[]> {
     return this.http.get<Task[]>(
       'Tasks', {
-        params: {
-          memberId: request.memberId,
-          searchValue: request.searchValue,
-          selectedStatus: request.selectedStatus,
-          sortKey: request.sortKey,
-          sortOrder: request.sortOrder
-        }
+      params: {
+        memberId: request.memberId,
+        searchValue: request.searchValue,
+        selectedStatus: request.selectedStatus,
+        sortKey: request.sortKey,
+        sortOrder: request.sortOrder
       }
+    }
+    ).pipe(
+      map(tasks => tasks.map(task => {
+        task.memberId == request.memberId ? task.isUserTask = true : task.isUserTask = false;
+        return task;
+      })),
     );
   }
 

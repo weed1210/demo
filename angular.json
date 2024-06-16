@@ -106,7 +106,13 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "codeCoverageExclude": [
+              "**/models/**/*",
+              "**/states/**/*",
+              "**/cookie.service.ts",
+              "**/error-dialog.component.ts"
+            ]
           }
         }
       }

@@ -1,18 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
-import { Task } from '../../models/task.model';
-import { TasksService } from '../../services/tasks.service';
-import { MatTable } from '@angular/material/table';
-import { CustomDataSource } from 'src/app/share/models/custom-data-source.model';
-import { Store } from '@ngrx/store';
-import { selectTaskSearchValue, selectTasks } from '../../states/tasks.selector';
-import { TasksActions } from '../../states/tasks.action';
-import { Router } from '@angular/router';
-import { selectMember } from 'src/app/core/auth/states/members.selector';
-import { BehaviorSubject, Observable, combineLatest, filter, of, startWith, switchMap } from 'rxjs';
-import { SelectionModel } from '@angular/cdk/collections';
-import { Dictionary } from 'src/app/share/models/dictionary.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
+import { MatTable } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { BehaviorSubject, combineLatest, startWith, switchMap } from 'rxjs';
+import { selectMember } from 'src/app/core/auth/states/members.selector';
+import { CustomDataSource } from 'src/app/share/models/custom-data-source.model';
+import { Dictionary } from 'src/app/share/models/dictionary.model';
+import { Task } from '../../models/task.model';
+import { TasksService } from '../../services/tasks.service';
+import { TasksActions } from '../../states/tasks.action';
+import { selectTaskSearchValue, selectTasks } from '../../states/tasks.selector';
 
 @Component({
   selector: 'task-list',
@@ -50,9 +49,9 @@ export class TaskListComponent {
   @ViewChild(MatTable) table: MatTable<Task>;
 
   constructor(
-    private tasksService: TasksService,
-    private store: Store,
-    private router: Router,
+    public tasksService: TasksService,
+    public store: Store,
+    public router: Router,
   ) {
     this.store.select(selectTasks);
     
@@ -84,8 +83,6 @@ export class TaskListComponent {
         next: res => {
           console.log(res);
           this.store.dispatch(TasksActions.get({ tasks: res }));
-
-          this.selectStatusForm
         }
       });
 
@@ -111,7 +108,7 @@ export class TaskListComponent {
   }
 
   onEdit(id: number) {
-    this.router.navigate(['/task-edit', { id: id }]);
+    this.router.navigate(['task-edit', { id: id }]);
   }
 
   onSortChange(sortState: Sort) {

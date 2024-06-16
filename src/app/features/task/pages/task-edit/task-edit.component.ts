@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Task } from '../../models/task.model';
-import { Observable, switchMap } from 'rxjs';
-import { TasksService } from '../../services/tasks.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { switchMap } from 'rxjs';
+import { Task } from '../../models/task.model';
+import { TasksService } from '../../services/tasks.service';
 import { TasksActions } from '../../states/tasks.action';
 
 @Component({
@@ -14,12 +14,11 @@ import { TasksActions } from '../../states/tasks.action';
 })
 export class TaskEditComponent {
   taskEditForm: FormGroup;
-
   constructor(
+    public tasksService: TasksService,
+    public router: Router,
+    public store: Store,
     private route: ActivatedRoute,
-    private router: Router,
-    private tasksService: TasksService,
-    private store: Store
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +41,7 @@ export class TaskEditComponent {
               Validators.min(0)
             ]),
             memberId: new FormControl(task.memberId),
+            coperatorId: new FormControl(task.coperatorId),
           });
         }
       })

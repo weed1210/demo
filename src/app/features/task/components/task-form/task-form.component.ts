@@ -1,8 +1,10 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Member } from 'src/app/core/auth/models/member.model';
+import { AuthService } from 'src/app/core/auth/services/auth.service';
 import { Dictionary } from 'src/app/share/models/dictionary.model';
 import { Task } from '../../models/task.model';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-form',
@@ -13,16 +15,6 @@ export class TaskFormComponent {
   @Input() taskForm: FormGroup;
   @Input() originalPath = '';
   @Output() onSubmit = new EventEmitter<Task>();
-
-  constructor(
-    private router: Router,
-  ) { }
-
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    console.log(this.taskForm);
-  }
 
   titleValidationError: Dictionary<string, string> = {
     data: [
@@ -75,6 +67,30 @@ export class TaskFormComponent {
         value: 'Finished'
       },
     ]
+  }
+
+  coperatorOptions: Dictionary<string, string> = {
+    data: []
+  }
+
+  constructor(
+    public router: Router,
+    public authService: AuthService
+  ) { }
+
+  ngOnInit(): void {
+    this.authService.getMembers().subscribe({
+      next: (members: Member[]) => {
+        this.coperatorOptions.data = members
+          .map(member => {
+            return {
+              key: member.id,
+              value: member.email
+            }
+          })
+          .filter(member => member.key !== this.taskForm.get("memberId")?.value)
+      }
+    })
   }
 
   submit() {

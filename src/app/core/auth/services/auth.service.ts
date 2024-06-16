@@ -25,4 +25,8 @@ export class AuthService {
         map(x => x.access_token)
       );
   }
+
+  getMembers(): Observable<Member[]> {
+    return this.http.get<Member[]>('Members')
+  }
 }
